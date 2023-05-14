@@ -5,10 +5,10 @@ const app = express.Router();
 const validate = require("../Middleware/Validate.Middleware");
 const GameModel = require("../models/game.model");
 const jwt = require("jsonwebtoken");
-// const EventValidator = require("../Middleware/Validate.Middleware");
+const EventValidator = require("../Middleware/Event.Validator");
 
 //end points: "/events/post" for creating any new event by any logged user after creation that user become admin of that event;
-app.post("/", validate, async (req, res) => {
+app.post("/", EventValidator, async (req, res) => {
   let { name, desc, start, end, maxPlayer } = req.body;
   let { token } = req.headers;
   token = jwt.decode(token, process.env.secret_key);
